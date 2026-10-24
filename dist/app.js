@@ -30,10 +30,8 @@ if(dest){busy=true;$('search').disabled=true;try{await route()}catch(e){status(e
 $('locate').onclick=locate;$('maploc').onclick=locate;
 $('search').onclick=async()=>{if(window.liveNavigation?.isActive()){window.liveNavigation.recenter();return;}if(busy||locating)return;if(!$('destination').value.trim())return status('先输入想去的地方。');busy=true;$('search').disabled=true;$('matches').innerHTML='';try{if(!origin){status('正在查找起点…');const o=await geocode($('origin').value);if(!o.length)throw Error('找不到起点，请补充城市或街道名称。');origin=[+o[0].lon,+o[0].lat]}if(dest){await route();return}status('正在搜索目的地…');const results=await geocode($('destination').value);if(!results.length)throw Error('找不到这个地点，请尝试更详细的地址。');status('请选择目的地：');results.forEach(r=>{const b=document.createElement('button');b.textContent=r.display_name;b.onclick=async()=>{if(busy||window.liveNavigation?.isActive())return;dest=[+r.lon,+r.lat];$('destination').value=r.display_name.split(',').slice(0,2).join(',');$('matches').innerHTML='';busy=true;try{await route()}catch(e){status(e.message)}finally{busy=false}};$('matches').append(b)})}catch(e){status(e.name==='TimeoutError'?'请求超时，请稍后再试。':e.message)}finally{busy=false;$('search').disabled=false}};
 document.querySelectorAll('[data-place]').forEach(b=>b.onclick=()=>{if(window.liveNavigation?.isActive()){window.liveNavigation.recenter();return;}if(busy||locating)return;dest=[+b.dataset.lng,+b.dataset.lat];$('destination').value=b.dataset.place;$('search').click()});
-async function fetchDrivingRoute(start,end,signal,alternatives=false){
-  const response=await fetch('https://router.project-osrm.org/route/v1/driving/'+start.join(',')+';'+end.join(',')+'?overview=full&geometries=geojson&alternatives='+alternatives+'&steps=true',{signal:signal?AbortSignal.any([signal,AbortSignal.timeout(18000)]):AbortSignal.timeout(18000)});
-  if(!response.ok)throw Error('路线服务暂时不可用');
-  const r=await response.json();if(r.code!=='Ok'||!r.routes?.length)throw Error('这两个地点之间没有可用的驾车路线。');return r.routes;
+async function fetchDrivingRoute(start,end,signal,alternatives=false,fix={}){
+  return RoadRouting.routes(start,end,{signal,alternatives,heading:fix.routingHeading,accuracy:fix.accuracy});
 }
 async function route(){status('正在规划驾车路线…');routeData=(await fetchDrivingRoute(origin,dest,null,true)).slice(0,3);renderRoutes();status('路线基于道路数据估算，不包含实时交通、事故或封路信息。')}
 function renderRoutes(fit=true,force=false){
@@ -52,7 +50,7 @@ window.addEventListener('jalan:destination',e=>{
 
 window.liveNavigation=createLiveNavigation({map,
   getSelection:()=>busy||locating?null:({destination:dest,route:routeData[selected]}),
-  planRoute:async(start,end,signal)=>(await fetchDrivingRoute(start,end,signal))[0],
+  planRoute:async(start,end,signal,fix)=>(await fetchDrivingRoute(start,end,signal,false,fix))[0],
   onRoute:(r,start)=>{origin=[...start];$('origin').value='Current location · 当前位置';routeData=[r];renderRoutes(false,true);if(defaultMarker){map.removeLayer(defaultMarker);defaultMarker=null}if(locationMarker){map.removeLayer(locationMarker);locationMarker=null}if(accuracyCircle){map.removeLayer(accuracyCircle);accuracyCircle=null}},
   onStatus:status
 });

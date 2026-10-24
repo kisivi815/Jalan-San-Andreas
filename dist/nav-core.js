@@ -2,6 +2,8 @@
 (function(root){
   const R=6371000,rad=d=>d*Math.PI/180;
   function distance(a,b){const x=rad(b[1]-a[1]),y=rad(b[0]-a[0]);const h=Math.sin(x/2)**2+Math.cos(rad(a[1]))*Math.cos(rad(b[1]))*Math.sin(y/2)**2;return 2*R*Math.asin(Math.min(1,Math.sqrt(h)))}
+  function bearing(a,b){const x=rad(b[0]-a[0]),p=rad(a[1]),q=rad(b[1]);return (Math.atan2(Math.sin(x)*Math.cos(q),Math.cos(p)*Math.sin(q)-Math.sin(p)*Math.cos(q)*Math.cos(x))*180/Math.PI+360)%360}
+  function angleDifference(a,b){return Math.abs(((a-b+540)%360+360)%360-180)}
   function prepare(route){
     const points=route.geometry?.coordinates;
     if(!points||points.length<2)throw Error('路线缺少可用于导航的道路坐标。');
@@ -46,6 +48,6 @@
   }
   function arrow(step){const m=step.maneuver||{};if(m.type==='arrive')return '⚑';if((m.type||'').includes('roundabout')||(m.type||'').includes('rotary'))return '⟳';if(m.modifier==='uturn')return '↶';return m.modifier?.includes('left')?'↰':m.modifier?.includes('right')?'↱':'↑'}
   function formatDistance(m){return m>=1000?(m/1000).toFixed(1)+' 公里':Math.max(0,Math.round(m/10)*10)+' 米'}
-  const api={distance,prepare,project,remaining,instruction,arrow,formatDistance};
+  const api={distance,bearing,angleDifference,prepare,project,remaining,instruction,arrow,formatDistance};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.NavCore=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

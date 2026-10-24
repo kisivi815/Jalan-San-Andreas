@@ -43,18 +43,23 @@ function createLiveNavigation({map,getSelection,planRoute,onRoute,onStatus}){
   async function replan(fix,initial=false){
     if(!active||planning)return;planning=true;lastPlan=Date.now();offSince=null;offCount=0;
     const token=epoch;controller=new AbortController();message(initial?'正在从当前位置规划路线…':'已偏离路线，正在重新规划…');
-    try{const route=await planRoute(fix.point,target,controller.signal);if(!active||token!==epoch)return;
+    try{const route=await planRoute(fix.point,target,controller.signal,fix);if(!active||token!==epoch)return;
       model=C.prepare(route);progress=0;announced.clear();onRoute(route,fix.point);speak(initial?'导航开始':'路线已重新规划');
       if(latest&&Date.now()-lastGood<15000)update(latest,true);else message('等待新 GPS 位置后继续导航…');
-    }catch(e){if(!active||token!==epoch)return;message(initial?'路线获取失败，请结束后重试。':'重新规划失败，等待网络恢复后重试。');onStatus('导航路线请求失败，请检查网络。');}
+    }catch(e){if(!active||token!==epoch)return;message(initial?'汽车路线获取失败，请结束后重试。':'汽车路线重算失败，请勿按旧提示继续行驶。');onStatus(e.message||'导航路线请求失败，请检查网络。');}
     finally{if(token===epoch){planning=false;controller=null}}
   }
   function update(fix,afterPlan=false){
     if(!active||!model)return;
     const match=C.project(fix.point,model,progress),limit=Math.max(45,fix.accuracy*1.5);
-    if(match.distance>limit){
+    const roadHeading=C.bearing(model.points[match.segment],model.points[match.segment+1]);
+    const opposite=Number.isFinite(fix.routingHeading)&&C.angleDifference(fix.routingHeading,roadHeading)>110;
+    const backwards=match.along<progress-Math.max(25,fix.accuracy*2);
+    if(match.distance>limit||opposite||backwards){
       if(offSince===null)offSince=Date.now();offCount++;
-      message('已偏离路线 · 正在确认位置');
+      message(opposite||backwards?'行进方向与路线不一致 · 正在确认':'已偏离路线 · 正在确认位置');
+      $('nav-distance').textContent='确认位置';$('nav-turn').textContent='暂不提供转弯提示，正在核对行进方向';
+      if(voiceAvailable)speechSynthesis.cancel();
       if(offCount>=3&&Date.now()-offSince>=5000&&Date.now()-lastPlan>=20000)replan(fix);
       return;
     }
@@ -73,10 +78,15 @@ function createLiveNavigation({map,getSelection,planRoute,onRoute,onStatus}){
     if(!active)return;const coords=p.coords,now=Date.now();
     if(!Number.isFinite(coords.latitude)||!Number.isFinite(coords.longitude)||!Number.isFinite(coords.accuracy)||coords.accuracy<0)return;
     if(p.timestamp&&now-p.timestamp>15000)return;
-    const fix={point:[coords.longitude,coords.latitude],accuracy:coords.accuracy,heading:coords.heading,timestamp:p.timestamp||now};
+    const fix={point:[coords.longitude,coords.latitude],accuracy:coords.accuracy,heading:coords.heading,speed:coords.speed,timestamp:p.timestamp||now,routingHeading:null};
+    if(fix.accuracy<=30&&Number.isFinite(coords.speed)&&coords.speed>=2&&Number.isFinite(coords.heading))fix.routingHeading=(coords.heading%360+360)%360;
     if(latest&&fix.timestamp<=latest.timestamp)return;
     if(fix.accuracy>80){message('GPS 精度较低，等待更准确的位置…');return}
     if(latest){const elapsed=(fix.timestamp-latest.timestamp)/1000;if(C.distance(latest.point,fix.point)>Math.max(300,elapsed*70)){message('定位出现跳动，等待稳定信号…');return}}
+    if(fix.routingHeading===null&&latest&&fix.accuracy<=30&&latest.accuracy<=30){
+      const seconds=(fix.timestamp-latest.timestamp)/1000,moved=C.distance(latest.point,fix.point);
+      if(seconds>=1&&seconds<=10&&moved>=Math.max(15,fix.accuracy+latest.accuracy)&&moved/seconds>=2){fix.routingHeading=C.bearing(latest.point,fix.point);fix.heading=fix.routingHeading;}
+    }
     latest=fix;lastGood=now;renderPlayer(fix);
     if(!model){if(!planning&&now-lastPlan>=20000)replan(fix,true);return}
     if(!planning)update(fix);

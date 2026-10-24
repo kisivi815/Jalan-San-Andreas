@@ -16,7 +16,7 @@ test('GPS projection follows bends and advances instructions only after the junc
  assert.equal(C.instruction(route.legs[0].steps[1]),'左转，进入 Second');
 });
 function setup(){
- let clock=200000,watcher,onError,cleared=[],requests=0,pendingResolve,routeCallbacks=0;
+ let clock=200000,watcher,onError,cleared=[],requests=0,pendingResolve,routeCallbacks=0,plannedFix=null;
  const elements=new Map(),el=id=>{if(!elements.has(id))elements.set(id,{textContent:'',disabled:false,inert:false,classList:{add(){},remove(){},toggle(){}},attrs:{'aria-pressed':'false'},getAttribute(k){return this.attrs[k]},setAttribute(k,v){this.attrs[k]=v}});return elements.get(id)};
  const graphic=()=>({addTo(){return this},setLatLng(){return this},setRadius(){},getElement(){return null}});
  const map={on(){},removeLayer(){},setView(){},getZoom:()=>16};
@@ -25,8 +25,8 @@ function setup(){
  window:{addEventListener(){}},navigator:{geolocation:{watchPosition(a,b){watcher=a;onError=b;return 42},clearWatch(id){cleared.push(id)}}},
  L:{marker:graphic,circle:graphic,divIcon:x=>x},setInterval:()=>1,clearInterval(){}};
  vm.createContext(context);vm.runInContext(fs.readFileSync('dist/navigation.js','utf8'),context);
- const nav=context.createLiveNavigation({map,getSelection:()=>({route,destination:points.at(-1)}),planRoute:async()=>{requests++;return await new Promise(r=>pendingResolve=r)},onRoute:()=>routeCallbacks++,onStatus(){}});
- return {nav,el,advance:n=>clock+=n,fix:(point,accuracy=5)=>watcher({coords:{longitude:point[0],latitude:point[1],accuracy,heading:90},timestamp:clock}),error:e=>onError(e),resolve:async()=>{pendingResolve(route);await new Promise(setImmediate)},get requests(){return requests},get callbacks(){return routeCallbacks},cleared};
+ const nav=context.createLiveNavigation({map,getSelection:()=>({route,destination:points.at(-1)}),planRoute:async(a,b,signal,fix)=>{plannedFix=fix;requests++;return await new Promise(r=>pendingResolve=r)},onRoute:()=>routeCallbacks++,onStatus(){}});
+ return {nav,el,advance:n=>clock+=n,fix:(point,accuracy=5,heading=90,speed=null)=>watcher({coords:{longitude:point[0],latitude:point[1],accuracy,heading,speed},timestamp:clock}),error:e=>onError(e),resolve:async()=>{pendingResolve(route);await new Promise(setImmediate)},get plannedFix(){return plannedFix},get requests(){return requests},get callbacks(){return routeCallbacks},cleared};
 }
 test('starts GPS watch, routes from live position, updates progress and clears watch on arrival',async()=>{
  const s=setup();s.nav.start();assert(s.nav.isActive());assert.equal(s.nav.getState().watch,42);
@@ -43,3 +43,12 @@ test('ignores inaccurate GPS, confirms deviation, and aborts stale request after
  s.nav.stop();await s.resolve();assert.equal(s.callbacks,1);assert(!s.nav.isActive());assert.deepEqual(s.cleared,[42]);
 });
 test('permission denial ends navigation and releases location tracking',()=>{const s=setup();s.nav.start();s.error({code:1});assert(!s.nav.isActive());assert.deepEqual(s.cleared,[42]);assert.equal(s.el('origin').disabled,false)});
+
+test('opposite travel on the same route suspends directions and replans with current heading',async()=>{
+ const s=setup();s.nav.start();s.fix(points[0],5,90,5);await s.resolve();assert.equal(s.plannedFix.routingHeading,90);
+ s.advance(21000);s.fix([101.7007,3.15],5,270,5);assert.match(s.el('nav-state').textContent,/方向与路线不一致/);assert.equal(s.nav.getState().progress,0);
+ s.advance(3000);s.fix([101.7005,3.15],5,270,5);s.advance(3000);s.fix([101.7003,3.15],5,270,5);assert.equal(s.requests,2);assert.equal(s.plannedFix.routingHeading,270);s.nav.stop();await s.resolve();
+});
+test('stationary compass reading is not used as a driving heading',async()=>{
+ const s=setup();s.nav.start();s.fix(points[0],5,270,0);await s.resolve();assert.equal(s.plannedFix.routingHeading,null);assert.match(s.el('nav-state').textContent,/GPS 导航中/);s.nav.stop();
+});
