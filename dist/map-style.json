@@ -46,7 +46,6 @@
       "type": "fill",
       "source": "openmaptiles",
       "source-layer": "landuse",
-      "maxzoom": 12,
       "filter": [
         "==",
         [
@@ -3845,7 +3844,6 @@
       "source": "openmaptiles",
       "source-layer": "building",
       "minzoom": 13,
-      "maxzoom": 14,
       "paint": {
         "fill-color": "#a4a4a4",
         "fill-outline-color": "#555555",

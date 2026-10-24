@@ -25,7 +25,7 @@ async function initMapTheme(map) {
     if (typeof window.maplibregl?.Map !== 'function' || typeof L.maplibreGL !== 'function') {
       throw new Error('Map renderer did not load');
     }
-    const response = await fetch('map-style.json?v=sa-2', { signal: AbortSignal.timeout(12000) });
+    const response = await fetch('map-style.json?v=sa-3', { signal: AbortSignal.timeout(12000) });
     if (!response.ok) throw new Error('Unable to load map style');
     const style = await response.json();
     layer = L.maplibreGL({ style, interactive: false }).addTo(map);
