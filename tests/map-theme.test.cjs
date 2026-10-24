@@ -15,6 +15,7 @@ async function setup(renderer, failure = false) {
   };
   const context = {
     window: { maplibregl: renderer },
+    initGtaPois() {},
     document: { querySelector: () => badge },
     L: {
       maplibreGL() {

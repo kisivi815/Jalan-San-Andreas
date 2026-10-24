@@ -1,0 +1,386 @@
+[
+  {
+    "id": 0,
+    "name": "Colored Square/Triangle (Dynamic)",
+    "source": "https://sampwiki.blast.hk/wroot/images2/8/81/Icon_0.gif",
+    "file": "assets/gta/icon-0.gif"
+  },
+  {
+    "id": 1,
+    "name": "White Square",
+    "source": "https://sampwiki.blast.hk/wroot/images2/7/7f/Icon_1.gif",
+    "file": "assets/gta/icon-1.gif"
+  },
+  {
+    "id": 2,
+    "name": "Player Position",
+    "source": "https://sampwiki.blast.hk/wroot/images2/a/ad/Icon_2.gif",
+    "file": "assets/gta/icon-2.gif"
+  },
+  {
+    "id": 3,
+    "name": "Player (Menu Map)",
+    "source": "https://sampwiki.blast.hk/wroot/images2/3/3e/Icon_3.gif",
+    "file": "assets/gta/icon-3.gif"
+  },
+  {
+    "id": 4,
+    "name": "North",
+    "source": "https://sampwiki.blast.hk/wroot/images2/4/4e/Icon_4.gif",
+    "file": "assets/gta/icon-4.gif"
+  },
+  {
+    "id": 5,
+    "name": "Air Yard",
+    "source": "https://sampwiki.blast.hk/wroot/images2/9/9c/Icon_5.gif",
+    "file": "assets/gta/icon-5.gif"
+  },
+  {
+    "id": 6,
+    "name": "Ammunation",
+    "source": "https://sampwiki.blast.hk/wroot/images2/e/e7/Icon_6.gif",
+    "file": "assets/gta/icon-6.gif"
+  },
+  {
+    "id": 7,
+    "name": "Barber",
+    "source": "https://sampwiki.blast.hk/wroot/images2/f/f1/Icon_7.gif",
+    "file": "assets/gta/icon-7.gif"
+  },
+  {
+    "id": 8,
+    "name": "Big Smoke",
+    "source": "https://sampwiki.blast.hk/wroot/images2/f/f8/Icon_8.gif",
+    "file": "assets/gta/icon-8.gif"
+  },
+  {
+    "id": 9,
+    "name": "Boat Yard",
+    "source": "https://sampwiki.blast.hk/wroot/images2/2/27/Icon_9.gif",
+    "file": "assets/gta/icon-9.gif"
+  },
+  {
+    "id": 10,
+    "name": "Burger Shot",
+    "source": "https://sampwiki.blast.hk/wroot/images2/0/0e/Icon_10.gif",
+    "file": "assets/gta/icon-10.gif"
+  },
+  {
+    "id": 11,
+    "name": "Quarry",
+    "source": "https://sampwiki.blast.hk/wroot/images2/5/5b/Icon_11.gif",
+    "file": "assets/gta/icon-11.gif"
+  },
+  {
+    "id": 12,
+    "name": "Catalina",
+    "source": "https://sampwiki.blast.hk/wroot/images2/6/6c/Icon_12.gif",
+    "file": "assets/gta/icon-12.gif"
+  },
+  {
+    "id": 13,
+    "name": "Cesar",
+    "source": "https://sampwiki.blast.hk/wroot/images2/a/a2/Icon_13.gif",
+    "file": "assets/gta/icon-13.gif"
+  },
+  {
+    "id": 14,
+    "name": "Cluckin' Bell",
+    "source": "https://sampwiki.blast.hk/wroot/images2/6/6d/Icon_14.gif",
+    "file": "assets/gta/icon-14.gif"
+  },
+  {
+    "id": 15,
+    "name": "Carl Johnson",
+    "source": "https://sampwiki.blast.hk/wroot/images2/7/78/Icon_15.gif",
+    "file": "assets/gta/icon-15.gif"
+  },
+  {
+    "id": 16,
+    "name": "C.R.A.S.H",
+    "source": "https://sampwiki.blast.hk/wroot/images2/a/a3/Icon_16.gif",
+    "file": "assets/gta/icon-16.gif"
+  },
+  {
+    "id": 17,
+    "name": "Diner",
+    "source": "https://sampwiki.blast.hk/wroot/images2/f/ff/Icon_17.gif",
+    "file": "assets/gta/icon-17.gif"
+  },
+  {
+    "id": 18,
+    "name": "Emmet",
+    "source": "https://sampwiki.blast.hk/wroot/images2/6/61/Icon_18.gif",
+    "file": "assets/gta/icon-18.gif"
+  },
+  {
+    "id": 19,
+    "name": "Enemy Attack",
+    "source": "https://sampwiki.blast.hk/wroot/images2/3/3c/Icon_19.gif",
+    "file": "assets/gta/icon-19.gif"
+  },
+  {
+    "id": 20,
+    "name": "Fire",
+    "source": "https://sampwiki.blast.hk/wroot/images2/0/03/Icon_20.gif",
+    "file": "assets/gta/icon-20.gif"
+  },
+  {
+    "id": 21,
+    "name": "Girlfriend",
+    "source": "https://sampwiki.blast.hk/wroot/images2/7/74/Icon_21.gif",
+    "file": "assets/gta/icon-21.gif"
+  },
+  {
+    "id": 22,
+    "name": "Hospital",
+    "source": "https://sampwiki.blast.hk/wroot/images2/7/73/Icon_22.gif",
+    "file": "assets/gta/icon-22.gif"
+  },
+  {
+    "id": 23,
+    "name": "Loco",
+    "source": "https://sampwiki.blast.hk/wroot/images2/a/a7/Icon_23.gif",
+    "file": "assets/gta/icon-23.gif"
+  },
+  {
+    "id": 24,
+    "name": "Madd Dogg",
+    "source": "https://sampwiki.blast.hk/wroot/images2/c/c7/Icon_24.gif",
+    "file": "assets/gta/icon-24.gif"
+  },
+  {
+    "id": 25,
+    "name": "Caligulas",
+    "source": "https://sampwiki.blast.hk/wroot/images2/b/b9/Icon_25.gif",
+    "file": "assets/gta/icon-25.gif"
+  },
+  {
+    "id": 26,
+    "name": "OG Loc",
+    "source": "https://sampwiki.blast.hk/wroot/images2/1/19/Icon_26.gif",
+    "file": "assets/gta/icon-26.gif"
+  },
+  {
+    "id": 27,
+    "name": "Mod garage",
+    "source": "https://sampwiki.blast.hk/wroot/images2/3/31/Icon_27.gif",
+    "file": "assets/gta/icon-27.gif"
+  },
+  {
+    "id": 28,
+    "name": "OG Loc",
+    "source": "https://sampwiki.blast.hk/wroot/images2/8/83/Icon_28.gif",
+    "file": "assets/gta/icon-28.gif"
+  },
+  {
+    "id": 29,
+    "name": "Well Stacked Pizza Co",
+    "source": "https://sampwiki.blast.hk/wroot/images2/6/68/Icon_29.gif",
+    "file": "assets/gta/icon-29.gif"
+  },
+  {
+    "id": 30,
+    "name": "Police",
+    "source": "https://sampwiki.blast.hk/wroot/images2/a/a0/Icon_30.gif",
+    "file": "assets/gta/icon-30.gif"
+  },
+  {
+    "id": 31,
+    "name": "Property",
+    "source": "https://sampwiki.blast.hk/wroot/images2/b/b6/Icon_31.gif",
+    "file": "assets/gta/icon-31.gif"
+  },
+  {
+    "id": 32,
+    "name": "Property",
+    "source": "https://sampwiki.blast.hk/wroot/images2/a/a9/Icon_32.gif",
+    "file": "assets/gta/icon-32.gif"
+  },
+  {
+    "id": 33,
+    "name": "Race",
+    "source": "https://sampwiki.blast.hk/wroot/images2/1/1a/Icon_33.gif",
+    "file": "assets/gta/icon-33.gif"
+  },
+  {
+    "id": 34,
+    "name": "Ryder",
+    "source": "https://sampwiki.blast.hk/wroot/images2/f/f0/Icon_34.gif",
+    "file": "assets/gta/icon-34.gif"
+  },
+  {
+    "id": 35,
+    "name": "Save Game",
+    "source": "https://sampwiki.blast.hk/wroot/images2/4/41/Icon_35.gif",
+    "file": "assets/gta/icon-35.gif"
+  },
+  {
+    "id": 36,
+    "name": "School",
+    "source": "https://sampwiki.blast.hk/wroot/images2/7/7b/Icon_36.gif",
+    "file": "assets/gta/icon-36.gif"
+  },
+  {
+    "id": 37,
+    "name": "Unknown",
+    "source": "https://sampwiki.blast.hk/wroot/images2/2/24/Icon_37.gif",
+    "file": "assets/gta/icon-37.gif"
+  },
+  {
+    "id": 38,
+    "name": "Sweet",
+    "source": "https://sampwiki.blast.hk/wroot/images2/0/06/Icon_38.gif",
+    "file": "assets/gta/icon-38.gif"
+  },
+  {
+    "id": 39,
+    "name": "Tattoo",
+    "source": "https://sampwiki.blast.hk/wroot/images2/7/78/Icon_39.gif",
+    "file": "assets/gta/icon-39.gif"
+  },
+  {
+    "id": 40,
+    "name": "The Truth",
+    "source": "https://sampwiki.blast.hk/wroot/images2/c/ce/Icon_40.gif",
+    "file": "assets/gta/icon-40.gif"
+  },
+  {
+    "id": 41,
+    "name": "Waypoint",
+    "source": "https://sampwiki.blast.hk/wroot/images2/4/48/Icon_41.gif",
+    "file": "assets/gta/icon-41.gif"
+  },
+  {
+    "id": 42,
+    "name": "Toreno",
+    "source": "https://sampwiki.blast.hk/wroot/images2/7/71/Icon_42.gif",
+    "file": "assets/gta/icon-42.gif"
+  },
+  {
+    "id": 43,
+    "name": "Triads",
+    "source": "https://sampwiki.blast.hk/wroot/images2/a/a2/Icon_43.gif",
+    "file": "assets/gta/icon-43.gif"
+  },
+  {
+    "id": 44,
+    "name": "Triads Casino",
+    "source": "https://sampwiki.blast.hk/wroot/images2/b/bb/Icon_44.gif",
+    "file": "assets/gta/icon-44.gif"
+  },
+  {
+    "id": 45,
+    "name": "Clothes",
+    "source": "https://sampwiki.blast.hk/wroot/images2/9/9d/Icon_45.gif",
+    "file": "assets/gta/icon-45.gif"
+  },
+  {
+    "id": 46,
+    "name": "Woozie",
+    "source": "https://sampwiki.blast.hk/wroot/images2/a/af/Icon_46.gif",
+    "file": "assets/gta/icon-46.gif"
+  },
+  {
+    "id": 47,
+    "name": "Zero",
+    "source": "https://sampwiki.blast.hk/wroot/images2/1/18/Icon_47.gif",
+    "file": "assets/gta/icon-47.gif"
+  },
+  {
+    "id": 48,
+    "name": "Club",
+    "source": "https://sampwiki.blast.hk/wroot/images2/7/72/Icon_48.gif",
+    "file": "assets/gta/icon-48.gif"
+  },
+  {
+    "id": 49,
+    "name": "Bar",
+    "source": "https://sampwiki.blast.hk/wroot/images2/a/a4/Icon_49.gif",
+    "file": "assets/gta/icon-49.gif"
+  },
+  {
+    "id": 50,
+    "name": "Restaurant",
+    "source": "https://sampwiki.blast.hk/wroot/images2/3/3a/Icon_50.gif",
+    "file": "assets/gta/icon-50.gif"
+  },
+  {
+    "id": 51,
+    "name": "Truck",
+    "source": "https://sampwiki.blast.hk/wroot/images2/d/d3/Icon_51.gif",
+    "file": "assets/gta/icon-51.gif"
+  },
+  {
+    "id": 52,
+    "name": "Robbery",
+    "source": "https://sampwiki.blast.hk/wroot/images2/6/61/Icon_52.gif",
+    "file": "assets/gta/icon-52.gif"
+  },
+  {
+    "id": 53,
+    "name": "Race",
+    "source": "https://sampwiki.blast.hk/wroot/images2/d/d8/Icon_53.gif",
+    "file": "assets/gta/icon-53.gif"
+  },
+  {
+    "id": 54,
+    "name": "Gym",
+    "source": "https://sampwiki.blast.hk/wroot/images2/b/b6/Icon_54.gif",
+    "file": "assets/gta/icon-54.gif"
+  },
+  {
+    "id": 55,
+    "name": "Car",
+    "source": "https://sampwiki.blast.hk/wroot/images2/5/58/Icon_55.gif",
+    "file": "assets/gta/icon-55.gif"
+  },
+  {
+    "id": 56,
+    "name": "Light",
+    "source": "https://sampwiki.blast.hk/wroot/images2/1/15/Icon_56.gif",
+    "file": "assets/gta/icon-56.gif"
+  },
+  {
+    "id": 57,
+    "name": "Closest airport",
+    "source": "https://sampwiki.blast.hk/wroot/images2/5/53/Icon_57.gif",
+    "file": "assets/gta/icon-57.gif"
+  },
+  {
+    "id": 58,
+    "name": "Varrios Los Aztecas",
+    "source": "https://sampwiki.blast.hk/wroot/images2/b/bc/Icon_58.gif",
+    "file": "assets/gta/icon-58.gif"
+  },
+  {
+    "id": 59,
+    "name": "Ballas",
+    "source": "https://sampwiki.blast.hk/wroot/images2/3/32/Icon_59.gif",
+    "file": "assets/gta/icon-59.gif"
+  },
+  {
+    "id": 60,
+    "name": "Los Santos Vagos",
+    "source": "https://sampwiki.blast.hk/wroot/images2/8/8c/Icon_60.gif",
+    "file": "assets/gta/icon-60.gif"
+  },
+  {
+    "id": 61,
+    "name": "San Fierro Rifa",
+    "source": "https://sampwiki.blast.hk/wroot/images2/7/7c/Icon_61.gif",
+    "file": "assets/gta/icon-61.gif"
+  },
+  {
+    "id": 62,
+    "name": "Grove street",
+    "source": "https://sampwiki.blast.hk/wroot/images2/1/11/Icon_62.gif",
+    "file": "assets/gta/icon-62.gif"
+  },
+  {
+    "id": 63,
+    "name": "Pay 'n' Spray",
+    "source": "https://sampwiki.blast.hk/wroot/images2/d/db/Icon_63.gif",
+    "file": "assets/gta/icon-63.gif"
+  }
+]
