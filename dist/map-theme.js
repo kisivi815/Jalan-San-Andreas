@@ -25,12 +25,24 @@ async function initMapTheme(map) {
     if (typeof window.maplibregl?.Map !== 'function' || typeof L.maplibreGL !== 'function') {
       throw new Error('Map renderer did not load');
     }
-    const response = await fetch('map-style.json?v=sa-4', { signal: AbortSignal.timeout(12000) });
+    const response = await fetch('map-style.json?v=sa-5', { signal: AbortSignal.timeout(12000) });
     if (!response.ok) throw new Error('Unable to load map style');
     const style = await response.json();
     layer = L.maplibreGL({ style, interactive: false }).addTo(map);
     map.attributionControl.addAttribution(attribution);
     const gl = layer.getMaplibreMap();
+    // The Leaflet bridge keeps its initial container dimensions on resize.
+    // Resize both renderers when navigation expands the mobile map.
+    const resizeBasemap = () => {
+      if (!map.hasLayer(layer)) return;
+      const size = layer.getSize();
+      const container = layer.getContainer();
+      container.style.width = size.x + 'px';
+      container.style.height = size.y + 'px';
+      gl.resize();
+    };
+    map.on('resize', resizeBasemap);
+    gl.on('remove', () => map.off('resize', resizeBasemap));
     timer = setTimeout(fallback, 20000);
     gl.once('load', () => {
       if (settled) return;

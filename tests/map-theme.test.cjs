@@ -11,6 +11,7 @@ async function setup(renderer, failure = false) {
     getContainer: () => container,
     hasLayer: () => true,
     removeLayer() {},
+    on() {}, off() {},
     attributionControl: { addAttribution() {}, removeAttribution() {} }
   };
   const context = {
