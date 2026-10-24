@@ -70,8 +70,13 @@ async function initGtaPois(gl, map) {
     const filter=['!=',categoryExpr,''];
     const definition={id:'gta-pois',type:'symbol',source:'openmaptiles','source-layer':'poi',minzoom:13,filter,
       layout:{'icon-image':icon,'icon-size':['interpolate',['linear'],['zoom'],13,.65,16,.9,18,1.1],
-        'icon-padding':5,'icon-allow-overlap':false,'symbol-sort-key':['coalesce',['get','rank'],100]}};
-    gl.addLayer(definition);
+        'icon-padding':5,'icon-allow-overlap':false,'symbol-sort-key':['coalesce',['get','rank'],100],
+        'text-field':['step',['zoom'],'',15,['coalesce',['get','name'],['get','name:en'],['get','name_en'],'']],
+        'text-font':['Noto Sans Regular'],'text-size':11,'text-anchor':'top','text-offset':[0,1.4],
+        'text-max-width':10,'text-padding':3,'text-optional':true},
+      paint:{'text-color':'#17241b','text-halo-color':'#f7f4e5','text-halo-width':1.5,'text-halo-blur':.4}};
+    const firstLabel=gl.getStyle().layers.find(l=>l.type==='symbol'&&l['source-layer']==='transportation_name');
+    gl.addLayer(definition,firstLabel?.id);
     map.getContainer().dataset.poiIcons='ready';
     const select=document.getElementById('poi-filter');
     GTA_POI_CATEGORIES.forEach(c=>{const o=document.createElement('option');o.value=c.key;o.textContent=c.label;select.append(o)});
