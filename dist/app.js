@@ -2,6 +2,9 @@ const $=id=>document.getElementById(id);let map,origin=[101.7123,3.1579],dest=nu
 function status(t){$('status').textContent=t}function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))} 
 if(window.L){map=L.map('map',{zoomControl:false,minZoom:2,maxZoom:19,maxBounds:[[-85,-180],[85,180]],maxBoundsViscosity:1}).setView([3.1515,101.707],13);initMapTheme(map);L.control.zoom({position:'bottomright'}).addTo(map);defaultMarker=L.circleMarker([origin[1],origin[0]],{radius:8,color:'#fff',weight:4,fillColor:'#386f59',fillOpacity:1}).addTo(map).bindPopup('默认起点：KLCC')}else status('地图组件加载失败，请刷新页面重试。');
 $('origin').addEventListener('input',()=>origin=null);$('destination').addEventListener('input',()=>dest=null);
+const mapSettings=document.createElement('button');mapSettings.className='map-settings';mapSettings.textContent='路线设置';mapSettings.setAttribute('aria-expanded','true');document.querySelector('.mapwrap').append(mapSettings);
+function mapOnly(enabled){document.body.classList.toggle('map-only',enabled);mapSettings.textContent=enabled?'路线设置':'收起设置';mapSettings.setAttribute('aria-expanded',String(!enabled));window.scrollTo(0,0);requestAnimationFrame(()=>{map?.invalidateSize?.({pan:false});window.scrollTo(0,0)})}
+mapSettings.onclick=()=>mapOnly(!document.body.classList.contains('map-only'));
 async function json(url){const r=await fetch(url,{signal:AbortSignal.timeout(18000)});if(!r.ok)throw Error('网络服务暂时不可用');return r.json()}
 async function geocode(q){return json('https://nominatim.openstreetmap.org/search?format=json&limit=5&q='+encodeURIComponent(q))}
 function locate(){
@@ -24,6 +27,7 @@ map.setView([origin[1],origin[0]],15);
 $('maptitle').textContent='你在这里。';$('mapsub').textContent='已将当前位置设为起点';
 status('已使用当前位置作为起点，定位精度约 '+Math.round(p.coords.accuracy)+' 米。');
 finish();
+mapOnly(true);
 if(dest){busy=true;$('search').disabled=true;try{await route()}catch(e){status(e.message)}finally{busy=false;$('search').disabled=false}}
 },e=>{finish();status(e.code===1?'位置权限被拒绝，请在浏览器的网站设置中允许位置访问，然后重试。':e.code===3?'定位超时，请到信号较好的地方重试。':'暂时无法确定你的位置，请稍后重试或手动输入起点。')},{enableHighAccuracy:true,timeout:15000,maximumAge:30000});
 }
@@ -55,3 +59,4 @@ window.liveNavigation=createLiveNavigation({map,
   onStatus:status
 });
 $('go').onclick=()=>window.liveNavigation.start();
+
